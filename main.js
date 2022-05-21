@@ -1,43 +1,61 @@
-var las_position_of_x, last_position_of_y;
-color ="blank";
-width_of_line = 2;
 
-canvas = document.getElementById('myCanvas');
-ctx = canvas.getContext("2d");
+var canvas = new fabric.Canvas('myCanvas');
+<canvas width="1100" hieght="450" id= "myCanvas"></canvas>
+ block_y=1;
+ block_x=1;
 
-var width = screen.width;
-new_width = screen.width - 70;
-new_height = screen.height - 300;
-    if(width < 992)
-    {
-    document.getElementById("myCanvas").width = new_width;
-    document.getElementById("myCanvas").height = new_height;
-    document.body.style.overflow = "hidden";
-    }
+block_image_width = 350;
+block_image_height = 430;
 
-    canvas.addEventlistener("touchstart", my_touchstart);
+var block_image_object= "";
 
-    function my_touchstart(e)
-    {
-        console.log("my_touchstart");
+function new_image(get_image)
+{
+	fabric.Image.fromURL(get_image, function(Img){ 
+    block_image_object=Img;
 
-      color = document.getElementById("color").value;
-      width_of_line = document.getElementById("width_of_line").value;
+	block_image_object.scaleToWidth(block_image_width);
+	block_image_object.scaleToHieght(block_image_height)
+	block_image_object.set({
+		top:block_y,
+		left:block_x
+	});
+	canvas.add(block_image_object);
+});
+}
+window.addEventListener("keydown", my_keydown);
 
+function my_keydown(e)
+{
+keyPressed = e.keyCode;
+console.log(keyPressed);
 
-      last_position_of_x = e.touches[0].clientX - canvas.offsetLeft;
-      last_position_of_y = e.touches[0].clientY - canvas.offsetTop;
-    }
-    canvas.addEventListener("touchmove", my_touchmove);
-    
+	if(keyPressed == '82') 
+	{
+		new_image('rr1.png');
+		console.log("r");
+	}
+	if(keyPressed == '71')
+	{
+		block_x = 200;
+		console.log("g");
+	}
+	
+	if(keyPressed == '89')
+	{
+		block_x =350;
+		console.log("y")
+	}
+	if(keyPressed == '80')
+	{
+		block_x = 600;
+		console.log("p")
+	}
+	if(keyPressed == '66')
+	{
+		block_x = 700;
+        console.log("b")	
+	}
+	
+}
 
-    function my_touchmove(e)
-    {
-
-        console.log("my_touchMove");
-        current_position_of_touch_x = e.touches[0].clientY - canvas.offsetLeft;
-        current_position_of_touch_y = e.touches[0].clientY - canvas.offsetTop;
-
-
-        ctx.beginPath();
-        ctx.strokeStyle = color
